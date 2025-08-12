@@ -49,7 +49,7 @@ const showAlert=(message,type)=>{
     <td>${todo.completed?"Completed":"Pending"}</td>
     <td>
     <button>Edit</button>
-    <button>Do</button>
+    <button onClick="toggleHandler('${todo.id}')">${todo.completed?"Undo":"Do"}</button>
     <button onClick="deleteHandler('${todo.id}')">Delete</button>
 
     </td>
@@ -110,6 +110,35 @@ const newTodos=todos.filter((todo)=>todo.id!==id)
   showAlert("todo deleted successfully","success")
 }
 
+
+const toggleHandler=id=>{
+//    todos.forEach((todo)=>{
+//    if(todo.id===id){
+//     todo.completed=!todo.completed
+//    }
+//    })
+//////////
+// const newTodos=todos.map((todo)=>{
+//     if(todo.id===id){
+//         return{
+//             // id:todo.id,
+//             // task:todo.task,
+//             // date:todo.date,
+//             ...todo,
+//             completed:!todo.completed
+//         }
+//     }else{
+//        return todo
+//     }
+// })
+// todos=newTodos
+////////
+const todo=todos.find((todo)=>todo.id===id)
+todo.completed=!todo.completed
+saveToLocalStorage()
+displayTodos()
+showAlert("Todo status successfully","success")
+}
 window.addEventListener("load",displayTodos)
 addButton.addEventListener("click",addHandler)
 deleteAllButton.addEventListener("click",deleteAllHandler)
