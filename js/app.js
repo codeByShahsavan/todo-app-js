@@ -1,3 +1,5 @@
+
+
 const  taskInput=document.getElementById("task-input")
 const  dateInput=document.getElementById("date-input")
 const  addButton=document.getElementById("add-button")
@@ -48,7 +50,7 @@ const showAlert=(message,type)=>{
     <td>
     <button>Edit</button>
     <button>Do</button>
-    <button>Delete</button>
+    <button onClick="deleteHandler('${todo.id}')">Delete</button>
 
     </td>
     
@@ -85,19 +87,29 @@ const addHandler=()=>{
     }
 }
 
-window.addEventListener("load",displayTodos)
-addButton.addEventListener("click",addHandler)
 
 const deleteAllHandler=()=>{
     if(todos.length){
-    todos=[]
-    saveToLocalStorage()
-    displayTodos()
-    showAlert("All todos cleared successfully","success")
+        todos=[]
+        saveToLocalStorage()
+        displayTodos()
+        showAlert("All todos cleared successfully","success")
     }else{
-    showAlert("no todos to clear","error")
-
+        showAlert("no todos to clear","error")
+        
     }
-
+    
 }
+
+
+const deleteHandler=(id)=>{
+const newTodos=todos.filter((todo)=>todo.id!==id)
+  todos=newTodos
+  saveToLocalStorage()
+  displayTodos()
+  showAlert("todo deleted successfully","success")
+}
+
+window.addEventListener("load",displayTodos)
+addButton.addEventListener("click",addHandler)
 deleteAllButton.addEventListener("click",deleteAllHandler)
